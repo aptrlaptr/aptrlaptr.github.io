@@ -37,17 +37,68 @@
         Notice that $3.5$ is equidistant between $3.0$ and $4.0$. Do we round up or do we round down? We need a tie breaking function.
     </p>
 
-    <p></p>
-
     <p> We define the "round half up" tie-breaking function: 
-        $$\lceil x + \frac{1}{2} \rceil$$ 
-        We can watch watch happens to $3.5$:
-        $$\lceil 3.5 + 0.5 \rceil = 4 $$
+        $$\lfloor x + \frac{1}{2} \rfloor$$ 
+        We can watch what happens to $3.5$:
+        $$\lfloor 3.5 + 0.5 \rfloor = 4 $$
     </p>
 
-    <p>What happens if we want to round to the nearest tenth?</p>
+    <p>What happens if we want to round to the nearest tenth?
+      We can define a function for any number of digits $n$: 
+      $$R_n(x) = \dfrac{\lfloor 10^n x + \frac{1}{2} \rfloor}{10^n}$$
+      thus,
+      $$3.549 \xrightarrow{R_1} 3.5$$
+      or,
+      $$3.549 \xrightarrow{R_2} 3.55 \xrightarrow{R_1} 3.6$$
+    </p>
 
-    <p>Write here.</p>
+    <p>But what if I wanted to round from right to left? We can define this as <b>cascade rounding</b>.
+    $$C_{m \to n}(x) = R_n(R_{n+1}(\cdots R_m(x) \cdots))$$
+    where $m$ is the digit we start rounding from and $n$ is the digit we finish rounding on.
+  </p>
+
+  <p>
+    When do these two methods disagree? They can only ever differ by $10^{-n}$. But how often does that occur?
+  </p>
+
+  <p>
+    Consider $3.539 \xrightarrow{R_1} 3.5$ and $3.539 \xrightarrow{C_{2 \to 1}} 3.5$.
+    These values agree. But replace the $3$ in the hundredths place with a $4$:
+    $$3.549 \xrightarrow{R_1} 3.5 \quad \text{but} \quad 3.549 \xrightarrow{C_{2 \to 1}} 3.6$$
+    The key issue is the digit $4$: it is too small to round up on its own, but a carry from the right can push it to $5$. A $3$ would absorb any carry without rounding up; a $5$ would round up regardless. Only a $4$ creates a discrepancy.
+    If we assume the digits are i.i.d. and uniformly distributed  <sup><a href="#fn1" id="ref1">[1]</a></sup>, then
+    $$\Pr[d_2 = 4] = \frac{1}{10}$$ 
+  </p>
+
+
+  <p>
+  How often does a carry survive? A carry can either live or die. We can define both cases:
+  <ul>
+    <li> Digit $= 5, 6, 7, 8, 9$: carry born or kept alive </li>
+    <li> Digit $= 0, 1, 2, 3, 4$: carry dies — except a $4$ passes the carry through to the next digit </li>
+  </ul>
+  Let $p$ be the probability that the carry survives to the end of the cascade <sup><a href="#fn2" id="ref1">[1]</a></sup> as $m \to \infty$, then 
+  $$p = \frac{5}{10} + \frac{p}{10} \implies p = \frac{5}{9}$$
+  where $\frac{5}{10}$ is the probability that a carry is born, and $\frac{p}{10}$ is the chance that a carry continues.
+  </p>
+
+  <p>
+    Finally we can put together these two independent events:
+    $$\boxed{\Pr[\text{disagreement}] = \frac{1}{10} \cdot \frac{5}{9} = \frac{1}{18} \approx 5.6\%.}$$
+  </p>
+
+<hr>
+<ol>
+   <li id="fn1">
+    This holds for almost all real numbers, but fails for any rational number (whose decimal expansion is eventually periodic) and for data following distributions like Benford's law, where digit frequencies are not uniform.
+    <a href="#ref1" title="Jump back to text">↩</a>
+  </li>
+  <li id="fn2">
+    This can be proven using a Markov chain. The carry state has two values: active or inactive. The stationary probability of the active state satisfies $\pi = \frac{6}{10}\pi + \frac{5}{10}(1-\pi)$, giving $\pi = \frac{5}{9}$.
+    <a href="#ref1" title="Jump back to text">↩</a>
+  </li>
+</ol>
+
   </article>
 
   <footer>© 2026 aptr · <a href="/">aptrlaptr.com</a></footer>
