@@ -4,14 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Blog</title>
-  <style>
-    body { max-width: 650px; margin: 60px auto; font-family: Georgia, serif; line-height: 1.7; color: #222; padding: 0 20px; }
-    h1 { font-size: 1.4rem; }
-    a { color: #555; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+  </nav>
+
   <h1>My Blog</h1>
-  <p>First post goes here.</p>
+
+  <ul class="post-list">
+    <li>
+      <span class="post-date">2026-04-04</span>
+      <a href="/posts/2026-04-04-first-post.html">First Post</a>
+    </li>
+  </ul>
 </body>
 </html>
