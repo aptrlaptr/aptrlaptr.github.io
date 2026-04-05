@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rounding Is a Choice</title>
+  <title>Post Title</title>
   <link rel="stylesheet" href="../style.css">
   <script>
     MathJax = {
@@ -22,96 +22,18 @@
     <a href="/about.html">About</a>
   </nav>
 
-  <h1>Rounding Is a Choice</h1>
+  <h1>Post Title</h1>
 
   <div class="post-meta">
-    <span>April 4, 2026</span>
+    <span>Month Day, Year</span>
     <span id="reading-time"></span>
-    <span><a class="tag" href="#">math</a></span>
+    <span>
+      <a class="tag" href="#">tag</a>
+    </span>
   </div>
 
   <article>
-
-    <p>
-      Most people learn one rounding rule: if the fractional part is exactly
-      $0.5$, round up. It feels obvious. It is also systematically wrong.
-    </p>
-
-    <p>
-      Consider five values, each sitting exactly at a half:
-    </p>
-
-    $$0.5,\quad 1.5,\quad 2.5,\quad 3.5,\quad 4.5$$
-
-    <p>
-      Their true sum is $12.5$. Round each one up and you get
-      $1 + 2 + 3 + 4 + 5 = 15$. The rounded sum overshoots by $2.5$ — half a
-      unit per value. This isn't bad luck. Round-half-up always breaks ties in
-      the same direction, so any dataset with values near a half accumulates
-      upward bias at a predictable rate.
-    </p>
-
-    <p>
-      Formally, if $X$ is uniform on $[n - 0.5,\, n + 0.5)$ for integer $n$,
-      round-half-up gives:
-    </p>
-
-    $$\mathbb{E}\bigl[\text{round}_{\uparrow}(X) - X\bigr] = \frac{1}{4n+2} > 0$$
-
-    <p>
-      Small, but nonzero, and it compounds.
-    </p>
-
-    <h2 style="font-size:1.1rem; font-weight:normal; margin-top:2rem;">The fix</h2>
-
-    <p>
-      Banker's rounding — also called round-half-to-even — breaks ties toward
-      the nearest even integer instead. So $0.5 \to 0$, $1.5 \to 2$,
-      $2.5 \to 2$, $3.5 \to 4$, $4.5 \to 4$.
-    </p>
-
-    <p>
-      Applied to the same five values: $0 + 2 + 2 + 4 + 4 = 12$. Still not
-      exactly $12.5$ — rounding always loses information — but the error is
-      $-0.5$ rather than $+2.5$, and crucially, the expected error over many
-      such rounds is zero:
-    </p>
-
-    $$\mathbb{E}\bigl[\text{round}_{\text{even}}(X) - X\bigr] = 0$$
-
-    <p>
-      Half the tie-breaks go down, half go up. The bias cancels.
-    </p>
-
-    <h2 style="font-size:1.1rem; font-weight:normal; margin-top:2rem;">It compounds</h2>
-
-    <p>
-      Rounding rarely happens once. When a rounded value feeds into a later
-      calculation that itself gets rounded, errors carry. Let $\epsilon_i$ be
-      the rounding error at step $i$. Under round-half-up,
-      $\mathbb{E}[\epsilon_i] > 0$ at every step, so after $n$ steps the
-      expected accumulated error is $O(n)$. Under banker's rounding,
-      $\mathbb{E}[\epsilon_i] = 0$ and errors partially cancel, giving
-      accumulated error $O(\sqrt{n})$ — the difference between a drift and a
-      random walk.
-    </p>
-
-    <h2 style="font-size:1.1rem; font-weight:normal; margin-top:2rem;">Why it matters</h2>
-
-    <p>
-      IEEE 754 — the floating point standard governing virtually every
-      calculator, spreadsheet, and programming language — mandates banker's
-      rounding as its default. Actuarial and financial calculations that
-      aggregate many rounded figures rely on this property to keep totals
-      consistent. The rule that feels natural is the one with the worst
-      long-run behavior. The fix is a single policy change that costs nothing.
-    </p>
-
-    <p>
-      Rounding is not a mechanical fact. It is a choice, and the default
-      choice is quietly biased.
-    </p>
-
+    <p>Write here.</p>
   </article>
 
   <footer>© 2026 aptr · <a href="/">aptrlaptr.com</a></footer>
